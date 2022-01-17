@@ -1,0 +1,610 @@
+
+<!DOCTYPE html><html ng-app="populationioApp"><head><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-NS7JD99');</script><title>Population.io by World Data Lab</title><meta name="robots" content="index, follow"><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=1300"><meta name="description" content="The World Population Project"><meta property="og:title" content="Population.io"><meta roperty="og:url" content="http://www.population.io"><meta property="og:description" content="The World Population Project"><meta property="og:type" content="website"><meta property="og:image" content="http://www.population.io/assets/populationio_og.png"><meta name="twitter:title" value="Population.io"><meta name="twitter:description" value="The World Population Project"><meta name="twitter:url" value="http://www.population.io"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="google-site-verification" content="ZxysnEH-Gp6i-_xm0zOn2Im-kxjR50XQba2S6lUHlP0"><link rel="icon" href="images/favicon.png?v=2" type="image/png">
+    <link rel="stylesheet" href="/css/vendor.css">
+    
+    
+    <link rel="stylesheet" href="/css/main.3ba3d30.css">
+    </head><body ng-controller="MainCtrl" ng-cloak><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NS7JD99" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><header><div class="container"><div class="logo"><span class="icon-popio"></span><a ng-click="showHomepage()"><span class="title">POPULATION.IO<div style="font-size: 16px;line-height: 2px;">by WORLD DATA LAB</div></span></a></div><div ng-class="{'active': loading}" class="loader fa fa-refresh"></div><form class="change-language"><label><select ng-model="defaultLanguage" ng-change="changeLanguage(defaultLanguage)" ng-options="getLanguageTitle(lang) for lang in languages"></select></label></form><ul class="link-list"><li><a ng-click="showAbout()" ng-bind="pageHeader.menuAbout">About</a><a ng-click="showMethodology()" ng-bind="pageHeader.menuMethodology">Methodology</a><a ng-click="showDevelopers()" ng-bind="pageHeader.menuApi">API</a></li></ul><div ng-show="currentPage &gt; 0" ng-click="showHomepage()" ng-cloak class="profile animate">{{ profile.getFormattedBirthday() | date:'dd MMM yyyy' }}, {{ profile.country | translate }}</div><div ng-show="currentPage &gt; 0" ng-cloak class="world-population animate"><span ng-show="clockType === 'personal'">{{rankGlobal | number:0}}</span><span ng-show="clockType === 'world'">{{worldPopulation | number:0}}</span><div class="toggle"><label ng-class="{'icon-gender icon-female': profile.gender === 'female', 'icon-male icon-gender': profile.gender === 'male'}" ng-model="clockType" uib-btn-radio="'personal'"></label><label ng-model="clockType" uib-btn-radio="'world'" class="icon-world"></label></div></div></div></header><div class="content-block"><svg class="defs-area"><defs><svg id="baby-girl" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="60px" height="60px" viewBox="0 0 60 60" enable-background="new 0 0 60 60" xml:space="preserve">
+    <g>
+    <path fill="#999999" d="M24.453,33.448v-4.664l-4.58,4.501c-1.985,2.016-4.669-0.567-2.679-2.591l7.251-7.397 c0.592-0.589,1.237-0.966,2.266-0.975h6.511c1.017,0.009,1.705,0.375,2.308,0.975l7.34,7.485c1.889,1.913-0.87,4.52-2.679,2.57 l-4.646-4.59v4.687H24.453z" />
+    <path fill="#999999" d="M35.662,35.189l-4.312,4.385l3.18,3.21l-3.244,3.301c-1.92,1.943,0.719,4.727,2.698,2.725l5.118-5.426 c1.108-1.148,1.412-3.256,0.241-4.451C39.331,38.924,35.662,35.189,35.662,35.189L35.662,35.189z" />
+    <path fill="#999999" d="M24.251,35.189l4.312,4.385l-3.157,3.21l3.245,3.301c1.907,1.943-0.732,4.727-2.701,2.725l-5.139-5.426 c-1.098-1.147-1.401-3.256-0.218-4.451C20.591,38.924,24.251,35.189,24.251,35.189L24.251,35.189z" />
+    <path fill="#999999" d="M32.512,20.151L32.512,20.151l-0.009,0.006c-0.737,0.462-4.54,2.052-8.802-2.009 c-1.71-1.769-2.521-4.461-2.521-4.461s1.819,0.833,3.239,0.277c0.961-0.379,1.919-1.548,2.101-1.78 c0.443-0.509,0.993-0.94,1.635-1.236c2.507-1.155,5.463-0.001,6.604,2.572C35.865,16.026,34.857,18.917,32.512,20.151z" />
+    </g>
+    </svg>
+    <svg version="1.1" id="baby-boy" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="60px" height="60px" viewBox="0 0 60 60" enable-background="new 0 0 60 60" xml:space="preserve">
+    <g>
+    <path fill="#999999" d="M24.453,33.448v-4.664l-4.58,4.501c-1.985,2.016-4.669-0.567-2.679-2.591l7.251-7.397 c0.593-0.589,1.237-0.966,2.266-0.975h6.511c1.017,0.009,1.706,0.375,2.308,0.975l7.34,7.485c1.889,1.913-0.87,4.52-2.679,2.57 l-4.645-4.59v4.687H24.453z" />
+    <path fill="#999999" d="M35.662,35.189l-4.312,4.385l3.18,3.21l-3.244,3.301c-1.92,1.943,0.719,4.727,2.698,2.725l5.118-5.426 c1.108-1.148,1.412-3.256,0.241-4.451C39.331,38.924,35.662,35.189,35.662,35.189L35.662,35.189z" />
+    <path fill="#999999" d="M24.251,35.189l4.312,4.385l-3.157,3.21l3.245,3.301c1.907,1.943-0.732,4.727-2.701,2.725l-5.139-5.426 c-1.098-1.147-1.401-3.256-0.218-4.451C20.591,38.924,24.251,35.189,24.251,35.189L24.251,35.189z" />
+    <circle fill="#999999" cx="30.032" cy="15.675" r="5.177" />
+    </g>
+    </svg>
+    <svg version="1.1" id="hello-bubble" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100px" height="100px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
+    <path fill-rule="evenodd" clip-rule="evenodd" fill="#BDAEE9" d="M50,6.497c24.577,0,44.5,16.243,44.5,36.281 c0,14.383-10.267,26.812-25.151,32.681c1.248,11.197-8.941,18.044-8.941,18.044s2.515-8.551-2.194-15.061 c-2.662,0.405-5.408,0.617-8.214,0.617c-24.577,0-44.5-16.244-44.5-36.281S25.423,6.497,50,6.497z" />
+    </svg>
+    <svg version="1.1" id="female" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="15px" height="30px" viewBox="0 0 15 30" enable-background="new 0 0 15 30" xml:space="preserve">
+    <g>
+    <path fill="#70CDDE" d="M7.025,20.425v6.123c0,0.005,0,0.01,0,0.015c-0.008,0.515-0.437,0.931-0.964,0.931 c-0.531,0-0.963-0.424-0.963-0.946v-6.123c0-0.001,0-0.002,0-0.004h1.927C7.025,20.422,7.025,20.423,7.025,20.425z" />
+    <path fill="#70CDDE" d="M9.903,20.425v6.123c0,0.522-0.432,0.946-0.964,0.946c-0.526,0-0.955-0.416-0.963-0.931 c0-0.005,0-0.009,0-0.015c0-0.004,0-0.008,0-0.012v-6.111c0-0.001,0-0.002,0-0.004h1.927C9.903,20.422,9.903,20.423,9.903,20.425z" />
+    <path fill="#70CDDE" d="M11.777,16.874l-1.792-7.39L9.059,9.7l2.374,9.787H3.542L5.916,9.7L4.99,9.484l-1.79,7.384l-0.472-0.111 c-0.517-0.121-0.837-0.631-0.714-1.139l1.711-7.048c0,0,0,0,0.001-0.001c0.259-1.065,1.22-1.808,2.336-1.808h2.878 c1.117,0,2.078,0.744,2.337,1.809l0,0l1.711,7.046c0,0,0,0,0,0.001c0.123,0.508-0.197,1.019-0.714,1.139L11.777,16.874z" />
+    <path fill="#70CDDE" d="M7.501,5.812c-0.928,0-1.683-0.741-1.683-1.653c0-0.911,0.755-1.653,1.683-1.653 c0.928,0,1.683,0.741,1.683,1.653C9.184,5.071,8.429,5.812,7.501,5.812z" />
+    </g>
+    </svg>
+    <svg version="1.1" id="male" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="15px" height="30px" viewBox="0 0 15 30" enable-background="new 0 0 15 30" xml:space="preserve">
+    <g>
+    <path fill="#888" d="M7.5,5.809c-0.869,0-1.576-0.742-1.576-1.654c0-0.912,0.707-1.653,1.576-1.653 c0.87,0,1.577,0.742,1.577,1.653C9.077,5.067,8.369,5.809,7.5,5.809z" />
+    <path fill="#888" d="M11.997,16.187c0,0.522-0.405,0.946-0.903,0.946h-0.453V9.59H9.75v16.96c0,0.522-0.405,0.946-0.903,0.946 c-0.493,0-0.895-0.416-0.903-0.931c0-0.005,0-0.01,0-0.015c0-0.004,0-0.009,0-0.012V16.187H7.054v10.364c0,0.006,0,0.01,0,0.015 c-0.007,0.515-0.41,0.931-0.903,0.931c-0.498,0-0.902-0.424-0.902-0.946V9.59H4.358v7.542H3.905c-0.498,0-0.902-0.424-0.902-0.946 V9.119c0-1.301,1.009-2.36,2.25-2.36h4.493c1.241,0,2.251,1.058,2.251,2.36L11.997,16.187L11.997,16.187z" />
+    </g>
+    </svg>
+    <svg version="1.1" id="male-large" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100px" height="230px" viewBox="0 0 100 230" enable-background="new 0 0 100 230" xml:space="preserve">
+    <g>
+    <path fill="#444444" d="M50,74.726c-3.808,0-6.906-3.252-6.906-7.248s3.098-7.244,6.906-7.244c3.813,0,6.911,3.252,6.911,7.244 C56.911,71.474,53.808,74.726,50,74.726z" />
+    <path fill="#444444" d="M69.707,120.204c0,2.287-1.775,4.145-3.957,4.145h-1.985V91.295H59.86v74.321 c0,2.287-1.775,4.145-3.957,4.145c-2.16,0-3.922-1.823-3.957-4.08c0-0.022,0-0.044,0-0.065c0-0.017,0-0.039,0-0.052v-45.36h-3.9 v45.417c0,0.026,0,0.044,0,0.065c-0.031,2.257-1.797,4.08-3.957,4.08c-2.183,0-3.953-1.858-3.953-4.145V91.295h-3.905v33.05h-1.985 c-2.183,0-3.953-1.858-3.953-4.145V89.231c0-5.701,4.421-10.342,9.86-10.342h19.689c5.438,0,9.864,4.636,9.864,10.342 L69.707,120.204L69.707,120.204z" />
+    </g>
+    </svg>
+    <svg version="1.1" id="female-large" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100px" height="230px" viewBox="0 0 100 230" enable-background="new 0 0 100 230" xml:space="preserve">
+    <g>
+    <path fill="#444444" d="M48.541,137.854v26.37c0,0.024,0,0.042,0,0.056c-0.033,2.217-1.805,4.011-3.978,4.011
+            c-2.192,0-3.978-1.825-3.978-4.074v-26.37c0-0.006,0-0.014,0-0.019h7.956C48.541,137.84,48.541,137.848,48.541,137.854z" />
+    <path fill="#444444" d="M60.422,137.854v26.37c0,2.249-1.786,4.074-3.979,4.074c-2.172,0-3.939-1.794-3.974-4.011
+            c0-0.021,0-0.039,0-0.056c0-0.016,0-0.042,0-0.058v-26.303c0-0.008,0-0.018,0-0.023h7.953
+            C60.422,137.84,60.422,137.848,60.422,137.854z" />
+    <path fill="#444444" d="M68.16,122.566l-7.402-31.821l-3.819,0.935l9.8,42.138H34.161l9.798-42.138l-3.822-0.932l-7.396,31.789
+            l-1.945-0.475c-2.135-0.521-3.455-2.725-2.947-4.904l7.062-30.342c0,0,0-0.002,0.003-0.005c1.067-4.583,5.035-7.782,9.642-7.782
+            h11.882c4.61,0,8.573,3.194,9.643,7.785l0.003,0.002l7.062,30.337c0,0,0,0,0,0.005c0.507,2.183-0.814,4.384-2.949,4.904
+            L68.16,122.566z" />
+    <path fill="#444444" d="M50.506,74.938c-3.829,0-6.949-3.191-6.949-7.115c0-3.932,3.118-7.118,6.949-7.118
+            c3.83,0,6.948,3.194,6.948,7.118C57.454,71.742,54.336,74.938,50.506,74.938z" />
+    </g>
+    </svg>
+    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="488px" height="615px" viewBox="0 0 488 615" enable-background="new 0 0 488 615" xml:space="preserve">
+    <g id="Layer_1">
+    <g id="completed" display="none">
+    <g display="inline">
+    <path fill="none" stroke="#FFFF66" stroke-width="10" stroke-linejoin="round" stroke-miterlimit="10" d="M156,50h240
+                    c22.1,0,40,17.9,40,40s-17.9,40-40,40H96c-22.1,0-40,17.9-40,40s17.9,40,40,40h300c22.1,0,40,17.9,40,40s-17.9,40-40,40H96
+                    c-22.1,0-40,17.9-40,40s17.9,40,40,40h300c22.1,0,40,17.9,40,40s-17.9,40-40,40H96c-22.1,0-40,17.9-40,40c0,22.1,17.9,40,40,40
+                    h300c22.1,0,40,17.9,40,40" />
+    </g>
+    <g display="inline">
+    <path fill="none" stroke="#D6D6D6" stroke-width="2" d="M156,50h240c22.1,0,40,17.9,40,40s-17.9,40-40,40H96
+                    c-22.1,0-40,17.9-40,40s17.9,40,40,40h300c22.1,0,40,17.9,40,40s-17.9,40-40,40H96c-22.1,0-40,17.9-40,40s17.9,40,40,40h300
+                    c22.1,0,40,17.9,40,40s-17.9,40-40,40H96c-22.1,0-40,17.9-40,40c0,22.1,17.9,40,40,40h300c22.1,0,40,17.9,40,40" />
+    </g>
+    </g>
+    <g>
+    <rect x="310" y="515" fill="#D6D6D6" width="1" height="20" />
+    <g>
+    <path fill="#A0A0A0" d="M324,516h-3l-0.3,2c0.2,0,0.4,0,0.6,0c0.6,0,1.2,0.1,1.7,0.4c0.6,0.4,1.1,1,1.1,2c0,1.5-1.2,2.7-2.9,2.7
+                    c-0.9,0-1.6-0.2-2-0.5l0.3-0.8c0.3,0.2,1,0.4,1.7,0.4c1,0,1.9-0.7,1.9-1.7s-0.7-1.7-2.3-1.7c-0.4,0-0.8,0-1.1,0.1l0.5-3.8h3.8
+                    L324,516L324,516z" />
+    </g>
+    </g>
+    <g>
+    <rect x="429" y="577" fill="#D6D6D6" width="20" height="1" />
+    <g>
+    <path fill="#A0A0A0" d="M448.3,564c0,2.6-1,4.1-2.7,4.1c-1.5,0-2.5-1.4-2.6-4c0-2.6,1.1-4,2.7-4
+                    C447.4,560.1,448.3,561.5,448.3,564z M444.1,564.1c0,2,0.6,3.2,1.6,3.2c1.1,0,1.6-1.2,1.6-3.2c0-1.9-0.5-3.2-1.6-3.2
+                    C444.8,560.9,444.1,562,444.1,564.1z" />
+    </g>
+    </g>
+    <g>
+    <rect x="429" y="417" fill="#D6D6D6" width="20" height="1" />
+    <g>
+    <path fill="#A0A0A0" d="M437.3,406.7c0.3,0.2,1,0.5,1.7,0.5c1.3,0,1.8-0.9,1.7-1.5c0-1.1-1-1.5-2-1.5h-0.6v-0.8h0.6
+                    c0.8,0,1.7-0.4,1.7-1.3c0-0.6-0.4-1.2-1.4-1.2c-0.6,0-1.2,0.3-1.5,0.5l-0.3-0.8c0.4-0.3,1.2-0.6,2-0.6c1.5,0,2.2,0.9,2.2,1.8
+                    c0,0.8-0.5,1.5-1.4,1.8l0,0c1,0.2,1.7,0.9,1.7,2c0,1.2-1,2.3-2.8,2.3c-0.9,0-1.6-0.3-2-0.5L437.3,406.7z" />
+    <path fill="#A0A0A0" d="M448.3,404c0,2.6-1,4.1-2.7,4.1c-1.5,0-2.5-1.4-2.6-4c0-2.6,1.1-4,2.7-4
+                    C447.4,400.1,448.3,401.5,448.3,404z M444.1,404.1c0,2,0.6,3.2,1.6,3.2c1.1,0,1.6-1.2,1.6-3.2c0-1.9-0.5-3.2-1.6-3.2
+                    C444.7,400.9,444.1,402,444.1,404.1z" />
+    </g>
+    </g>
+    <g>
+    <rect x="429" y="254" fill="#D6D6D6" width="20" height="1" />
+    <g>
+    <path fill="#A0A0A0" d="M441.5,237.9c-0.2,0-0.5,0-0.8,0c-1.6,0.3-2.5,1.5-2.7,2.8l0,0c0.4-0.5,1-0.9,1.9-0.9
+                    c1.4,0,2.3,1,2.3,2.5c0,1.4-1,2.7-2.6,2.7c-1.7,0-2.7-1.3-2.7-3.3c0-1.5,0.5-2.7,1.3-3.5c0.6-0.6,1.5-1,2.5-1.1
+                    c0.3,0,0.6-0.1,0.8-0.1L441.5,237.9L441.5,237.9z M441.2,242.4c0-1.1-0.6-1.8-1.6-1.8c-0.6,0-1.2,0.4-1.5,1
+                    c-0.1,0.1-0.1,0.3-0.1,0.5c0,1.3,0.6,2.2,1.7,2.2C440.6,244.3,441.2,243.5,441.2,242.4z" />
+    <path fill="#A0A0A0" d="M448.3,241c0,2.6-1,4.1-2.7,4.1c-1.5,0-2.5-1.4-2.6-4c0-2.6,1.1-4,2.7-4
+                    C447.4,237.1,448.3,238.5,448.3,241z M444.1,241.1c0,2,0.6,3.2,1.6,3.2c1.1,0,1.6-1.2,1.6-3.2c0-1.9-0.5-3.2-1.6-3.2
+                    C444.8,237.9,444.1,239,444.1,241.1z" />
+    </g>
+    </g>
+    <g>
+    <rect x="429" y="94" fill="#D6D6D6" width="20" height="1" />
+    <g>
+    <path fill="#A0A0A0" d="M437.6,84.2c0.2,0,0.5,0,0.8,0c0.6-0.1,1.2-0.3,1.6-0.7c0.5-0.5,0.9-1.1,1-2.1l0,0
+                    c-0.4,0.5-1,0.8-1.8,0.8c-1.4,0-2.3-1-2.3-2.4c0-1.5,1.1-2.8,2.6-2.8c1.6,0,2.6,1.3,2.6,3.3c0,1.7-0.6,2.9-1.3,3.6
+                    c-0.6,0.6-1.4,0.9-2.2,1c-0.4,0.1-0.7,0.1-1,0.1L437.6,84.2L437.6,84.2z M438,79.8c0,1,0.6,1.6,1.5,1.6c0.7,0,1.2-0.3,1.5-0.8
+                    c0.1-0.1,0.1-0.2,0.1-0.4c0-1.3-0.5-2.3-1.6-2.3C438.7,77.9,438,78.7,438,79.8z" />
+    <path fill="#A0A0A0" d="M448.3,81c0,2.6-1,4.1-2.7,4.1c-1.5,0-2.5-1.4-2.6-4c0-2.6,1.1-4,2.7-4C447.4,77.1,448.3,78.5,448.3,81z
+                     M444.1,81.1c0,2,0.6,3.2,1.6,3.2c1.1,0,1.6-1.2,1.6-3.2c0-1.9-0.5-3.2-1.6-3.2C444.8,77.9,444.1,79,444.1,81.1z" />
+    </g>
+    </g>
+    <g>
+    <rect x="27" y="497" fill="#D6D6D6" width="20" height="1" />
+    <g>
+    <path fill="#A0A0A0" d="M29.2,482.1L29.2,482.1l-1.4,0.7l-0.2-0.8l1.7-0.9h0.9v7.9h-1V482.1L29.2,482.1z" />
+    <path fill="#A0A0A0" d="M37.8,482h-3l-0.3,2c0.2,0,0.4,0,0.6,0c0.6,0,1.2,0.1,1.7,0.4c0.6,0.4,1.1,1,1.1,2c0,1.5-1.2,2.7-2.9,2.7
+                    c-0.9,0-1.6-0.2-2-0.5l0.3-0.8c0.3,0.2,1,0.4,1.7,0.4c1,0,1.9-0.7,1.9-1.7s-0.7-1.7-2.3-1.7c-0.4,0-0.8,0-1.1,0.1l0.5-3.8h3.8
+                    V482z" />
+    </g>
+    </g>
+    <g>
+    <rect x="27" y="336" fill="#D6D6D6" width="20" height="1" />
+    <g>
+    <path fill="#A0A0A0" d="M31.3,328v-2.1h-3.7v-0.7l3.5-5h1.1v4.9h1.1v0.8h-1.1v2.1L31.3,328L31.3,328z M31.3,325v-2.6
+                    c0-0.4,0-0.8,0-1.2l0,0c-0.2,0.5-0.4,0.8-0.7,1.2l-1.9,2.7l0,0h2.6V325z" />
+    <path fill="#A0A0A0" d="M38.9,321h-3l-0.3,2c0.2,0,0.4,0,0.6,0c0.6,0,1.2,0.1,1.7,0.4c0.6,0.4,1.1,1,1.1,2c0,1.5-1.2,2.7-2.9,2.7
+                    c-0.9,0-1.6-0.2-2-0.5l0.3-0.8c0.3,0.2,1,0.4,1.7,0.4c1,0,1.9-0.7,1.9-1.7s-0.7-1.7-2.3-1.7c-0.4,0-0.8,0-1.1,0.1l0.5-3.8h3.8
+                    V321z" />
+    </g>
+    </g>
+    <g>
+    <rect x="27" y="177" fill="#D6D6D6" width="20" height="1" />
+    <g>
+    <path fill="#A0A0A0" d="M33.1,161.1v0.7l-3.4,7.2h-1.1l3.4-7l0,0h-3.8v-0.9H33.1z" />
+    <path fill="#A0A0A0" d="M38.9,162h-3l-0.3,2c0.2,0,0.4,0,0.6,0c0.6,0,1.2,0.1,1.7,0.4c0.6,0.4,1.1,1,1.1,2c0,1.5-1.2,2.7-2.9,2.7
+                    c-0.9,0-1.6-0.2-2-0.5l0.3-0.8c0.3,0.2,1,0.4,1.7,0.4c1,0,1.9-0.7,1.9-1.7s-0.7-1.7-2.3-1.7c-0.4,0-0.8,0-1.1,0.1l0.5-3.8h3.8
+                    C38.9,161.1,38.9,162,38.9,162z" />
+    </g>
+    </g>
+    <g>
+    <rect x="168" y="515" fill="#D6D6D6" width="1" height="20" />
+    <g>
+    <path fill="#A0A0A0" d="M178.7,516.2L178.7,516.2l-1.4,0.7l-0.2-0.8l1.7-0.9h0.9v7.7h-1V516.2L178.7,516.2z" />
+    <path fill="#A0A0A0" d="M187.7,519c0,2.6-1,4.1-2.7,4.1c-1.5,0-2.5-1.4-2.6-4c0-2.6,1.1-4,2.7-4
+                    C186.8,515.1,187.7,516.5,187.7,519z M183.5,519.1c0,2,0.6,3.2,1.6,3.2c1.1,0,1.6-1.2,1.6-3.2c0-1.9-0.5-3.2-1.6-3.2
+                    C184.2,515.9,183.5,517,183.5,519.1z" />
+    </g>
+    </g>
+    <g>
+    <rect x="308" y="435" fill="#D6D6D6" width="1" height="20" />
+    <g>
+    <path fill="#A0A0A0" d="M316.6,442.9v-0.6l0.8-0.8c2-1.9,2.9-2.9,2.9-4c0-0.8-0.4-1.5-1.5-1.5c-0.7,0-1.3,0.4-1.6,0.7l-0.3-0.7
+                    c0.5-0.5,1.3-0.8,2.2-0.8c1.7,0,2.4,1.1,2.4,2.3c0,1.4-1,2.6-2.7,4.2L318,442l0,0h3.5v0.9H316.6z" />
+    <path fill="#A0A0A0" d="M327.3,436.1h-3l-0.3,2c0.2,0,0.3,0,0.6,0c0.6,0,1.2,0.1,1.7,0.4c0.6,0.3,1.1,1,1.1,2
+                    c0,1.5-1.2,2.6-2.9,2.6c-0.8,0-1.6-0.2-1.9-0.5l0.3-0.8c0.3,0.2,1,0.4,1.7,0.4c1,0,1.8-0.6,1.8-1.7c0-1-0.7-1.7-2.2-1.7
+                    c-0.4,0-0.8,0-1.1,0.1l0.5-3.7h3.7L327.3,436.1L327.3,436.1z" />
+    </g>
+    </g>
+    <g>
+    <rect x="168" y="435" fill="#D6D6D6" width="1" height="20" />
+    <g>
+    <path fill="#A0A0A0" d="M176.5,442.9v-0.6l0.8-0.8c2-1.9,2.9-2.9,2.9-4c0-0.8-0.4-1.5-1.5-1.5c-0.7,0-1.3,0.4-1.6,0.7l-0.3-0.7
+                    c0.5-0.5,1.3-0.8,2.2-0.8c1.7,0,2.4,1.1,2.4,2.2c0,1.4-1,2.6-2.7,4.2L178,442l0,0h3.5v0.9H176.5z" />
+    <path fill="#A0A0A0" d="M187.8,439c0,2.6-1,4.1-2.7,4.1c-1.5,0-2.5-1.4-2.6-4c0-2.6,1.1-4,2.7-4
+                    C186.9,435.1,187.8,436.5,187.8,439z M183.6,439.1c0,2,0.6,3.2,1.6,3.2c1.1,0,1.6-1.2,1.6-3.2c0-1.9-0.5-3.2-1.6-3.2
+                    C184.2,435.9,183.6,437,183.6,439.1z" />
+    </g>
+    </g>
+    <g>
+    <rect x="310" y="355" fill="#D6D6D6" width="1" height="20" />
+    <g>
+    <path fill="#A0A0A0" d="M318.8,361.7c0.3,0.2,1,0.5,1.7,0.5c1.3,0,1.8-0.9,1.7-1.5c0-1.1-1-1.5-2-1.5h-0.6v-0.8h0.6
+                    c0.8,0,1.7-0.4,1.7-1.3c0-0.6-0.4-1.2-1.4-1.2c-0.6,0-1.2,0.3-1.5,0.5l-0.3-0.8c0.4-0.3,1.2-0.6,2-0.6c1.5,0,2.2,0.9,2.2,1.8
+                    c0,0.8-0.5,1.5-1.4,1.8l0,0c1,0.2,1.7,0.9,1.7,2c0,1.2-1,2.3-2.8,2.3c-0.9,0-1.6-0.3-2-0.5L318.8,361.7z" />
+    <path fill="#A0A0A0" d="M329.3,356.1h-3l-0.3,2c0.2,0,0.3,0,0.6,0c0.6,0,1.2,0.1,1.7,0.4c0.6,0.3,1.1,1,1.1,2
+                    c0,1.5-1.2,2.6-2.9,2.6c-0.8,0-1.6-0.2-1.9-0.5l0.3-0.8c0.3,0.2,1,0.4,1.7,0.4c1,0,1.8-0.6,1.8-1.7c0-1-0.7-1.7-2.2-1.7
+                    c-0.4,0-0.8,0-1.1,0.1l0.5-3.7h3.7L329.3,356.1L329.3,356.1z" />
+    </g>
+    </g>
+    <g>
+    <rect x="168" y="355" fill="#D6D6D6" width="1" height="20" />
+    <g>
+    <path fill="#A0A0A0" d="M179.8,362.9v-2.1h-3.6v-0.7l3.5-4.9h1.1v4.8h1.1v0.8h-1.1v2.1L179.8,362.9L179.8,362.9z M179.8,360v-2.6
+                    c0-0.4,0-0.8,0-1.2l0,0c-0.2,0.5-0.4,0.8-0.6,1.1l-1.9,2.6l0,0h2.5V360z" />
+    <path fill="#A0A0A0" d="M187.8,359c0,2.6-1,4.1-2.7,4.1c-1.5,0-2.5-1.4-2.6-4c0-2.6,1.1-4,2.7-4
+                    C186.9,355.1,187.8,356.5,187.8,359z M183.6,359.1c0,2,0.6,3.2,1.6,3.2c1.1,0,1.6-1.2,1.6-3.2c0-1.9-0.5-3.2-1.6-3.2
+                    C184.3,355.9,183.6,357,183.6,359.1z" />
+    </g>
+    </g>
+    <g>
+    <rect x="308" y="275" fill="#D6D6D6" width="1" height="20" />
+    <g>
+    <path fill="#A0A0A0" d="M321.2,276h-3l-0.3,2c0.2,0,0.4,0,0.6,0c0.6,0,1.2,0.1,1.7,0.4c0.6,0.4,1.1,1,1.1,2
+                    c0,1.5-1.2,2.7-2.9,2.7c-0.9,0-1.6-0.2-2-0.5l0.3-0.8c0.3,0.2,1,0.4,1.7,0.4c1,0,1.9-0.7,1.9-1.7s-0.7-1.7-2.3-1.7
+                    c-0.4,0-0.8,0-1.1,0.1l0.5-3.8h3.8L321.2,276L321.2,276z" />
+    <path fill="#A0A0A0" d="M327.4,276h-3l-0.3,2c0.2,0,0.4,0,0.6,0c0.6,0,1.2,0.1,1.7,0.4c0.6,0.4,1.1,1,1.1,2
+                    c0,1.5-1.2,2.7-2.9,2.7c-0.9,0-1.6-0.2-2-0.5l0.3-0.8c0.3,0.2,1,0.4,1.7,0.4c1,0,1.9-0.7,1.9-1.7s-0.7-1.7-2.3-1.7
+                    c-0.4,0-0.8,0-1.1,0.1l0.5-3.8h3.8L327.4,276L327.4,276z" />
+    </g>
+    </g>
+    <g>
+    <rect x="168" y="275" fill="#D6D6D6" width="1" height="20" />
+    <g>
+    <path fill="#A0A0A0" d="M181.2,276.1h-3l-0.3,2c0.2,0,0.3,0,0.6,0c0.6,0,1.2,0.1,1.7,0.4c0.6,0.3,1.1,1,1.1,2
+                    c0,1.5-1.2,2.6-2.9,2.6c-0.8,0-1.6-0.2-1.9-0.5l0.3-0.8c0.3,0.2,1,0.4,1.7,0.4c1,0,1.8-0.6,1.8-1.7c0-1-0.7-1.7-2.2-1.7
+                    c-0.4,0-0.8,0-1.1,0.1l0.5-3.7h3.7L181.2,276.1L181.2,276.1z" />
+    <path fill="#A0A0A0" d="M187.8,279c0,2.6-1,4.1-2.7,4.1c-1.5,0-2.5-1.4-2.6-4c0-2.6,1.1-4,2.7-4
+                    C186.9,275.1,187.8,276.5,187.8,279z M183.6,279.1c0,2,0.6,3.2,1.6,3.2c1.1,0,1.6-1.2,1.6-3.2c0-1.9-0.5-3.2-1.6-3.2
+                    C184.3,275.9,183.6,277,183.6,279.1z" />
+    </g>
+    </g>
+    <g>
+    <rect x="310" y="195" fill="#D6D6D6" width="1" height="20" />
+    <g>
+    <path fill="#A0A0A0" d="M323,195.9c-0.2,0-0.5,0-0.8,0c-1.6,0.3-2.5,1.5-2.7,2.8l0,0c0.4-0.5,1-0.9,1.9-0.9c1.4,0,2.3,1,2.3,2.5
+                    c0,1.4-1,2.7-2.6,2.7c-1.7,0-2.7-1.3-2.7-3.3c0-1.5,0.5-2.7,1.3-3.5c0.6-0.6,1.5-1,2.5-1.1c0.3,0,0.6-0.1,0.8-0.1L323,195.9
+                    L323,195.9z M322.7,200.4c0-1.1-0.6-1.8-1.6-1.8c-0.6,0-1.2,0.4-1.5,1c-0.1,0.1-0.1,0.3-0.1,0.5c0,1.3,0.6,2.2,1.7,2.2
+                    C322.1,202.3,322.7,201.5,322.7,200.4z" />
+    <path fill="#A0A0A0" d="M329.3,196.1h-3l-0.3,2c0.2,0,0.3,0,0.6,0c0.6,0,1.2,0.1,1.7,0.4c0.6,0.3,1.1,1,1.1,2
+                    c0,1.5-1.2,2.6-2.9,2.6c-0.8,0-1.6-0.2-1.9-0.5l0.3-0.8c0.3,0.2,1,0.4,1.7,0.4c1,0,1.8-0.6,1.8-1.7c0-1-0.7-1.7-2.2-1.7
+                    c-0.4,0-0.8,0-1.1,0.1l0.5-3.7h3.7L329.3,196.1L329.3,196.1z" />
+    </g>
+    </g>
+    <g>
+    <rect x="168" y="195" fill="#D6D6D6" width="1" height="20" />
+    <g>
+    <path fill="#A0A0A0" d="M181.5,195.2v0.7l-3.4,7H177l3.4-6.8l0,0h-3.8v-0.9H181.5L181.5,195.2z" />
+    <path fill="#A0A0A0" d="M187.8,199c0,2.6-1,4.1-2.7,4.1c-1.5,0-2.5-1.4-2.6-4c0-2.6,1.1-4,2.7-4
+                    C186.8,195.1,187.8,196.5,187.8,199z M183.6,199.1c0,2,0.6,3.2,1.6,3.2c1.1,0,1.6-1.2,1.6-3.2c0-1.9-0.5-3.2-1.6-3.2
+                    C184.2,195.9,183.6,197,183.6,199.1z" />
+    </g>
+    </g>
+    <g>
+    <rect x="308" y="115" fill="#D6D6D6" width="1" height="20" />
+    <g>
+    <path fill="#A0A0A0" d="M316.5,121c0-1,0.6-1.7,1.5-2.1l0,0c-0.9-0.4-1.2-1.1-1.2-1.7c0-1.2,1-2.1,2.4-2.1c1.5,0,2.2,0.9,2.2,1.9
+                    c0,0.7-0.3,1.4-1.3,1.8l0,0c1,0.4,1.6,1.1,1.6,2c0,1.3-1.2,2.2-2.6,2.2C317.5,123.1,316.5,122.1,316.5,121z M320.7,120.9
+                    c0-0.9-0.7-1.4-1.7-1.7c-0.9,0.3-1.4,0.9-1.4,1.6c0,0.8,0.6,1.5,1.5,1.5C320.1,122.3,320.7,121.7,320.7,120.9z M317.8,117.1
+                    c0,0.8,0.6,1.2,1.5,1.4c0.7-0.2,1.2-0.7,1.2-1.4c0-0.6-0.4-1.3-1.3-1.3C318.3,115.8,317.8,116.4,317.8,117.1z" />
+    <path fill="#A0A0A0" d="M327.3,116.1h-3l-0.3,2c0.2,0,0.3,0,0.6,0c0.6,0,1.2,0.1,1.7,0.4c0.6,0.3,1.1,1,1.1,2
+                    c0,1.5-1.2,2.6-2.9,2.6c-0.8,0-1.6-0.2-1.9-0.5l0.3-0.8c0.3,0.2,1,0.4,1.7,0.4c1,0,1.8-0.6,1.8-1.7c0-1-0.7-1.7-2.2-1.7
+                    c-0.4,0-0.8,0-1.1,0.1l0.5-3.7h3.7L327.3,116.1L327.3,116.1z" />
+    </g>
+    </g>
+    <g>
+    <rect x="166" y="115" fill="#D6D6D6" width="1" height="20" />
+    <g>
+    <path fill="#A0A0A0" d="M174.5,121c0-1,0.6-1.7,1.5-2.1l0,0c-0.9-0.4-1.2-1.1-1.2-1.7c0-1.2,1-2.1,2.4-2.1c1.5,0,2.2,0.9,2.2,1.9
+                    c0,0.7-0.3,1.4-1.3,1.8l0,0c1,0.4,1.6,1.1,1.6,2c0,1.3-1.2,2.2-2.6,2.2C175.4,123.1,174.5,122.1,174.5,121z M178.6,120.9
+                    c0-0.9-0.7-1.4-1.7-1.7c-0.9,0.3-1.4,0.9-1.4,1.6c0,0.8,0.6,1.5,1.5,1.5C178,122.3,178.6,121.7,178.6,120.9z M175.7,117.1
+                    c0,0.8,0.6,1.2,1.5,1.4c0.7-0.2,1.2-0.7,1.2-1.4c0-0.6-0.4-1.3-1.3-1.3C176.2,115.8,175.7,116.4,175.7,117.1z" />
+    <path fill="#A0A0A0" d="M185.8,119c0,2.6-1,4.1-2.7,4.1c-1.5,0-2.5-1.4-2.6-4c0-2.6,1.1-4,2.7-4
+                    C184.9,115.1,185.8,116.5,185.8,119z M181.6,119.1c0,2,0.6,3.2,1.6,3.2c1.1,0,1.6-1.2,1.6-3.2c0-1.9-0.5-3.2-1.6-3.2
+                    C182.3,115.9,181.6,117,181.6,119.1z" />
+    </g>
+    </g>
+    <g>
+    <rect x="311" y="35" fill="#D6D6D6" width="1" height="20" />
+    <g>
+    <path fill="#A0A0A0" d="M320.2,42.2c0.2,0,0.5,0,0.8,0c0.6-0.1,1.2-0.3,1.6-0.7c0.5-0.5,0.9-1.1,1-2.1l0,0
+                    c-0.4,0.5-1,0.8-1.8,0.8c-1.4,0-2.3-1-2.3-2.4c0-1.5,1.1-2.8,2.6-2.8c1.6,0,2.6,1.3,2.6,3.3c0,1.7-0.6,2.9-1.3,3.6
+                    c-0.6,0.6-1.4,0.9-2.2,1c-0.4,0.1-0.7,0.1-1,0.1L320.2,42.2L320.2,42.2z M320.6,37.8c0,1,0.6,1.6,1.5,1.6c0.7,0,1.2-0.3,1.5-0.8
+                    c0.1-0.1,0.1-0.2,0.1-0.4c0-1.3-0.5-2.3-1.6-2.3C321.2,35.9,320.6,36.7,320.6,37.8z" />
+    <path fill="#A0A0A0" d="M330.3,36.1h-3l-0.3,2c0.2,0,0.3,0,0.6,0c0.6,0,1.2,0.1,1.7,0.4c0.6,0.3,1.1,1,1.1,2
+                    c0,1.5-1.2,2.6-2.9,2.6c-0.8,0-1.6-0.2-1.9-0.5l0.3-0.8c0.3,0.2,1,0.4,1.7,0.4c1,0,1.8-0.6,1.8-1.7c0-1-0.7-1.7-2.2-1.7
+                    c-0.4,0-0.8,0-1.1,0.1l0.5-3.7h3.7L330.3,36.1L330.3,36.1z" />
+    </g>
+    </g>
+    <g>
+    <rect x="169" y="35" fill="#D6D6D6" width="1" height="20" />
+    <g>
+    <path fill="#A0A0A0" d="M179,36.2L179,36.2l-1.4,0.7l-0.2-0.8l1.7-0.9h0.9v7.7h-1V36.2L179,36.2z" />
+    <path fill="#A0A0A0" d="M188,39c0,2.6-1,4.1-2.7,4.1c-1.5,0-2.5-1.4-2.6-4c0-2.6,1.1-4,2.7-4C187,35.1,188,36.5,188,39z
+                     M183.8,39.1c0,2,0.6,3.2,1.6,3.2c1.1,0,1.6-1.2,1.6-3.2c0-1.9-0.5-3.2-1.6-3.2C184.4,35.9,183.8,37,183.8,39.1z" />
+    <path fill="#A0A0A0" d="M194.1,39c0,2.6-1,4.1-2.7,4.1c-1.5,0-2.5-1.4-2.6-4c0-2.6,1.1-4,2.7-4C193.1,35.1,194.1,36.5,194.1,39z
+                     M189.9,39.1c0,2,0.6,3.2,1.6,3.2c1.1,0,1.6-1.2,1.6-3.2c0-1.9-0.5-3.2-1.6-3.2C190.5,35.9,189.9,37,189.9,39.1z" />
+    </g>
+    </g>
+    <g id="guides">
+    </g>
+    </g>
+    <g id="Ebene_2">
+    <path fill="none" stroke="#000000" stroke-miterlimit="10" d="M428.1,575.2c0-22.1-17.7-40-39.8-40h-300c-22.1,0-40-17.9-40-40
+            s17.9-40,40-40h300c22.1,0,40-17.9,40-40s-17.9-40-40-40h-300c-22.1,0-40-17.9-40-40s17.9-40,40-40h300c22.1,0,40-17.9,40-40
+            s-17.9-40-40-40h-300c-22.1,0-40-17.9-40-40s17.9-40,40-40h300c22.1,0,40-17.9,40-40s-17.9-40-40-40H168.8" />
+    </g>
+    </svg>
+    </defs></svg><section id="home" du-scrollspy="home" offset="82" data-index="0"><world-clock><h3><i class="icon icon-world"> </i> <p translate="HOME_WORLD_CLOCK" /></h3></world-clock><div ng-controller="HomeCtrl" class="container"><div class="home-area"><div class="question"><h1>{{ 'HOME_TEXT_BIG' | translate }}</h1><p compile-unsafe="'HOME_TEXT_SMALL' | translate"></p><p ng-if="!hasValidBirthday(profile.birthday)" class="error">{{ 'INVALID_BIRTHDATE' | translate }}</p><form name="goForm" ng-class="{'highlight':highlightErrors, 'highlight-extra':highlightExtra}" autocomplete="off" class="form-inline"><div class="typeahead"><input name="day" placeholder="{{ 'LOCAL_DAY' | translate }}" type="text" ng-model="profile.birthday.day" required validate-day class="day-field form-control"></div><div class="typeahead"><input name="month" placeholder="{{ 'LOCAL_MONTH' | translate }}" type="text" ng-model="profile.birthday.month" uib-typeahead="month.value as month.label for month in months | filter: { label: $viewValue }" typeahead-min-length="0" required validate-month class="month-field form-control"></div><div class="typeahead"><input name="year" placeholder="{{ 'LOCAL_YEAR' | translate }}" type="text" ng-model="profile.birthday.year" required validate-year class="year-field form-control"></div><div class="typeahead icon-country"><input placeholder="{{ 'LOCAL_COUNTRY' | translate }}" type="text" ng-model="profile.country" uib-typeahead="country.value as country.label for country in countriesList($viewValue)" required validate-country country-translate class="form-control"></div><div class="toggle"><label ng-model="profile.gender" uib-btn-radio="'female'" required class="icon icon-female">{{ 'LOCAL_FEMALE' | translate }}</label><label ng-model="profile.gender" uib-btn-radio="'male'" required class="icon icon-male">{{ 'LOCAL_MALE' | translate }}</label></div><a ng-click="goGoGadget()" ng-disabled="loading" ng-class="{inactive:goForm.$invalid, loading:loading}" class="btn btn-big"><span class="fa fa-refresh"></span></a></form></div></div></div></section><section id="summary" du-scrollspy="summary" data-index="1" offset="200" ng-hide="!profile.active"><div ng-controller="SummaryCtrl" class="container"><div class="summary-area"><h3 translate="SUMMARY_INTRO" translate-values="{val1: (rankGlobal+1 | number:0), val2: (worldYoungerPercentageSimple | number:0), val3: (countryYoungerPercentageSimple | number:0), val4: (profile.country | translate ), val5: ((profile.country + '.wording') | translate) }"></h3><div class="region-switcher"><span ng-class="{active:region==&quot;World&quot;}" ng-click="selectWorld()">{{ 'SUMMARY_WORLD' | translate }}</span><span ng-class="{active:region!=&quot;World&quot;}" ng-click="selectCountry()" title="{{ profile.country | translate }}">{{ profile.country | translate }}</span></div><div class="younger-you-older-section"><div ng-hide="region=='World'" class="younger-column country"><div class="number">{{ rankLocal | number : 0}}</div><div ng-bind="calcCountryYoungerPercentage()" class="label"></div></div><div ng-hide="region!='World'" class="younger-column world"><div class="number">{{ rankGlobal | number : 0}}</div><div ng-bind="calcWorldYoungerPercentage()" class="label"></div></div><div class="you-column"><div ng-if="profile.gender == 'female'" class="icon"><svg x="0px" y="0px" width="45px" height="90px" viewBox="0 0 15 30" enable-background="new 0 0 15 30" xml:space="preserve">
+    <g>
+    <path fill="#111" d="M7.025,20.425v6.123c0,0.005,0,0.01,0,0.015c-0.008,0.515-0.437,0.931-0.964,0.931 c-0.531,0-0.963-0.424-0.963-0.946v-6.123c0-0.001,0-0.002,0-0.004h1.927C7.025,20.422,7.025,20.423,7.025,20.425z" />
+    <path fill="#111" d="M9.903,20.425v6.123c0,0.522-0.432,0.946-0.964,0.946c-0.526,0-0.955-0.416-0.963-0.931 c0-0.005,0-0.009,0-0.015c0-0.004,0-0.008,0-0.012v-6.111c0-0.001,0-0.002,0-0.004h1.927C9.903,20.422,9.903,20.423,9.903,20.425z" />
+    <path fill="#111" d="M11.777,16.874l-1.792-7.39L9.059,9.7l2.374,9.787H3.542L5.916,9.7L4.99,9.484l-1.79,7.384l-0.472-0.111 c-0.517-0.121-0.837-0.631-0.714-1.139l1.711-7.048c0,0,0,0,0.001-0.001c0.259-1.065,1.22-1.808,2.336-1.808h2.878 c1.117,0,2.078,0.744,2.337,1.809l0,0l1.711,7.046c0,0,0,0,0,0.001c0.123,0.508-0.197,1.019-0.714,1.139L11.777,16.874z" />
+    <path fill="#111" d="M7.501,5.812c-0.928,0-1.683-0.741-1.683-1.653c0-0.911,0.755-1.653,1.683-1.653 c0.928,0,1.683,0.741,1.683,1.653C9.184,5.071,8.429,5.812,7.501,5.812z" />
+    </g>
+    </svg></div><div ng-if="profile.gender == 'male'" class="icon"><svg x="0px" y="0px" width="45px" height="90px" viewBox="0 0 15 30" enable-background="new 0 0 15 30" xml:space="preserve">
+    <g>
+    <path fill="#111" d="M7.5,5.809c-0.869,0-1.576-0.742-1.576-1.654c0-0.912,0.707-1.653,1.576-1.653 c0.87,0,1.577,0.742,1.577,1.653C9.077,5.067,8.369,5.809,7.5,5.809z" />
+    <path fill="#111" d="M11.997,16.187c0,0.522-0.405,0.946-0.903,0.946h-0.453V9.59H9.75v16.96c0,0.522-0.405,0.946-0.903,0.946 c-0.493,0-0.895-0.416-0.903-0.931c0-0.005,0-0.01,0-0.015c0-0.004,0-0.009,0-0.012V16.187H7.054v10.364c0,0.006,0,0.01,0,0.015 c-0.007,0.515-0.41,0.931-0.903,0.931c-0.498,0-0.902-0.424-0.902-0.946V9.59H4.358v7.542H3.905c-0.498,0-0.902-0.424-0.902-0.946 V9.119c0-1.301,1.009-2.36,2.25-2.36h4.493c1.241,0,2.251,1.058,2.251,2.36L11.997,16.187L11.997,16.187z" />
+    </g>
+    </svg></div><div translate="SUMMARY_CITIZEN" translate-values="{region: ((region=='World')?'SUMMARY_WORLD':profile.country|translate), in: ((region=='World')?'der':'in')}" class="label"></div></div><div ng-hide="region=='World'" class="older-column country"><div ng-bind="scaledRankOlderLocal | number: 0" class="number"></div><div ng-bind="calcCountryOlderPercentage()" class="label"></div></div><div ng-hide="region!='World'" class="older-column world"><div ng-bind="scaledRankOlderGlobal | number: 0" class="number"></div><div ng-bind="calcWorldOlderPercentage()" class="label"></div></div></div><summary-chart></summary-chart></div></div></section><section id="expectancy" du-scrollspy="expectancy" data-index="4" offset="200" ng-hide="!profile.active"><div ng-controller="ExpectancyCtrl" class="container"><div class="expectancy-area"><header><h1>{{ 'EXPECTANCY_INTRO' | translate }}</h1></header><div class="toolbar"><div class="country-selection"><div class="typeahead ref"><input placeholder="{{ 'LOCAL_COUNTRY' | translate }}" type="text" ng-model="currentCountry" uib-typeahead="country.value as country.label for country in countriesList($viewValue)" typeahead-wait-ms="100" typeahead-editable="false" country-translate></div><div class="icon icon-vs"></div><div class="typeahead rel"><input placeholder="{{ 'LOCAL_COUNTRY' | translate }}" type="text" ng-model="referenceCountry" uib-typeahead="country.value as country.label for country in countriesList($viewValue)" typeahead-wait-ms="100" typeahead-editable="false" country-translate></div></div><div class="time-slider"><time-slider></time-slider></div></div><expectancy-map country="currentCountry" reference="referenceCountry" width="1200" height="500"></expectancy-map></div></div></section><section id="milestones" du-scrollspy="milestones" offset="200" data-index="2" ng-hide="!profile.active"><div ng-controller="MilestonesCtrl" class="container"><div class="milestones-area"><header><h1 translate="MILESTONES_INTRO"></h1><h1 translate="MILESTONES_DATES" translate-values="{ val1: (milestoneDate|date:'dd MMM yyyy'), val2: milestoneCounter }" ng-if="milestoneDate"></h1></header><div class="rank"><h2>{{ 'MILESTONES_TITLE_AGE_DISTRIBUTION' | translate }}</h2><div class="global-rank"><div class="title">{{ 'LOCAL_WORLD' | translate }}</div><rank-graph country="'World'" data="globalRankData" age="age"></rank-graph></div><div class="local-rank"><div class="title">{{ profile.country | translate }}</div><rank-graph country="country" data="localRankData" age="age"></rank-graph></div></div><div class="timeline"><h2>{{ 'MILESTONES_TIMELINE' | translate }}</h2><ul><li ng-repeat="item in milestonesData | orderBy:dateOrder:true" data-id="item.year" ng-class="{'is-rank': item.rank, 'now': item.now, 'past': item.year &lt; year, 'selected': item.selected}" ng-click="highlightMilestone(item)" class="{{item.color}}"><span class="time"><span class="date">{{item.date | date: 'dd MMM' }}</span><span class="year">{{item.date | date: 'yyyy' }}</span></span><span class="title">{{item.title}}</span></li></ul><milestones data="milestonesData" selected-year="selectedYear"></milestones></div></div></div></section><section id="birthdays" du-scrollspy="birthdays" data-index="3" offset="200" ng-hide="!profile.active"><div ng-controller="BirthdaysCtrl" class="container"><div class="birthdays-area"><div class="marketBanner"><span class="marketBannerLogo"></span><span class="marketBannerFirst">{{ 'MARKET_BANNER_FIRST' | translate }}</span><span class="marketBannerSec">{{ 'MARKET_BANNER_SEC' | translate }}</span><a target="_blank" href="https://marketpro.io/" share-title="marketpro.io" class="marketBannerLink">{{ 'MARKET_BANNER_LINK' | translate }}</a></div><header><h1 translate="BIRTHDAYS_INTRO" translate-values="{sharedDay: (sharedDay|number:0), sharedHour: (sharedHour|number:0) }"></h1></header><h2 compile-unsafe="'BIRTHDAYS_TITLE_CONTINENTAL' | translate" class="continental"></h2><h2 compile-unsafe="'BIRTHDAYS_TITLE_WORLD' | translate" class="world"></h2><birthdays-chart continents-data="continentsData" world-data="worldData" country="country"></birthdays-chart><div class="continents"><span>{{ 'BIRTHDAYS_SWITCH_LABEL' | translate }}</span><div ng-disabled="loading" class="toggle"><label ng-model="selectedContinental" uib-btn-radio="'Asia'">{{ 'LOCAL_ASIA' | translate }}</label><label ng-model="selectedContinental" uib-btn-radio="'Europe'">{{ 'LOCAL_EUROPE' | translate }}</label><label ng-model="selectedContinental" uib-btn-radio="'Africa'">{{ 'LOCAL_AFRICA' | translate }}</label><label ng-model="selectedContinental" uib-btn-radio="'North America'">{{ 'LOCAL_NORTH_AMERICA' | translate }}</label><label ng-model="selectedContinental" uib-btn-radio="'South America'">{{ 'LOCAL_SOUTH_AMERICA' | translate }}</label><label ng-model="selectedContinental" uib-btn-radio="'Oceania'">{{ 'LOCAL_OCEANIA' | translate }}</label></div></div></div></div></section><section id="death" du-scrollspy="death" data-index="5" offset="200" ng-hide="!profile.active"><div ng-controller="DeathCtrl" class="container"><div class="death-area"><header><h1 translate="DEATH_INTRO" translate-values="{dodWorld: (dodWorld|date:'dd MMM yyyy'), country: country, dodCountry:(dodCountry|date:'dd MMM yyyy') }"></h1></header><div class="type-switcher"><span ng-class="{active:type==&quot;distribution&quot;}" ng-click="type=&quot;distribution&quot;">{{ 'DEATH_MORTALITY_DISTRIBUTION' | translate }}</span><span ng-class="{active:type==&quot;chances&quot;}" ng-click="type=&quot;chances&quot;">{{ 'DEATH_CHANCES_OF_DYING' | translate }}</span></div><death-chart></death-chart><h2>{{ 'DEATH_EXPECTANCY_TITLE' | translate }}</h2><div class="death-stats"><div class="column"><div class="content"><div class="title world">{{dodWorld|date:'dd MMM yyyy'}}</div><div translate="DEATH_EXPECTANCY_TXT_WORLD" translate-values="{remainingLifeWorldInYears: remainingLifeWorldInYears}" class="copy"></div></div></div><div class="column"><div class="content"><div class="title">{{differenceInDays}}</div><div translate="DEATH_EXPECTANCY_TXT_DIFFERENCE" translate-values="{soMuchToDo: soMuchToDo, differenceInUnits:differenceInUnits}" class="copy"></div></div></div><div class="column"><div class="content"><div class="title country">{{dodCountry|date:'dd MMM yyyy'}}</div><div translate="DEATH_EXPECTANCY_TXT_COUNTRY" translate-values="{remainingLifeCountryInYears: remainingLifeCountryInYears, country:country}" class="copy"></div></div></div></div></div></div></section><script type="text/ng-template" id="about.html"><style>.modal-dialog {
+    background: #fff;
+    -webkit-box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    border-radius: 4px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 40px;
+    width: 800px;
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    margin-left: -400px;
+    max-height: 80%;
+    overflow-y: auto;
+    }</style><div class="modal-header"><h3 class="modal-title">{{ 'HEADER_MENU_ABOUT' | translate }}</h3></div><div class="modal-body"><p compile-unsafe="'ABOUT_INTRO' | translate"></p><h4>Credits</h4><p compile-unsafe="'ABOUT_CREDITS_CORE' | translate"></p><p compile-unsafe="'ABOUT_CREDITS_SUPPORTED' | translate"></p><p compile-unsafe="'ABOUT_CREDITS_CONTRIBUTERS' | translate"></p><h4 compile-unsafe="'ABOUT_DISCLAIMER_TITLE' | translate"></h4><p compile-unsafe="'ABOUT_DISCLAIMER' | translate"></p></div><div class="modal-footer"><button ng-click="$close()">OK!</button></div></script><script type="text/ng-template" id="methodology.html"><style>.modal-dialog {
+    background: #fff;
+    -webkit-box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    border-radius: 4px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 40px;
+    width: 800px;
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    margin-left: -400px;
+    max-height: 80%;
+    overflow-y: auto;
+    }</style><div class="modal-header"><h3 compile-unsafe="'METHODOLOGY_TITLE' | translate" class="modal-title"></h3></div><div class="modal-body"><p compile-unsafe="'METHODOLOGY_INTRO' | translate"></p><p compile-unsafe="'METHODOLOGY_DETAILS' | translate"></p></div><div class="modal-footer"><button ng-click="$close()">OK!</button></div></script><script type="text/ng-template" id="impressum.html"><style>.modal-dialog {
+    background: #fff;
+    -webkit-box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    border-radius: 4px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 40px;
+    width: 800px;
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    margin-left: -400px;
+    max-height: 80%;
+    overflow-y: auto;
+    }</style><div class="modal-header"><h3 class="modal-title">Impressum</h3></div><div class="modal-body"><div class="center"><p>Weltdatenlabor<br><span>(World Data Laboratory, WDL)<br></span><span>c/o Impact Hub Vienna<br></span><span>Lindengasse 56/18-19</span><span>1070 Wien, Österreich</span></p><p>Tel.: +43 6508772254</p><p>E-Mail: <a href="population@worlddata.io">population@worlddata.io</a><hr></p><p>Unternehmensgegenstand: Dienstleistungen</p><p>UID-Nr. ATU71525334</p><p>ZVR-Zahl: 340464429<hr></p><p>Verbraucher haben die Möglichkeit, Beschwerden an die OnlineStreitbelegungsplattform der EU zu richten: <a href="http://ec.europa.eu/odr">http://ec.europa.eu/odr</a>. Sie können allfällige Beschwerde auch an die oben angegebene E-Mail-Adresse richten.</p></div></div><div class="modal-footer"><button ng-click="$close()">OK!</button></div></script><script type="text/ng-template" id="developers.html"><style>.modal-dialog {
+    background: #fff;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border-radius: initial;
+    -webkit-box-sizing: initial;
+    -moz-box-sizing: initial;
+    box-sizing: initial;
+    padding: initial;
+    width: initial;
+    position: initial;
+    top: initial;
+    left: initial;
+    margin-left: initial;
+    max-height: initial;
+    overflow-y: initial;
+    }
+    .glZKvc .modal {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-image: initial;
+    background-position-x: initial;
+    background-position-y: initial;
+    background-size: initial;
+    background-repeat-x: initial;
+    background-repeat-y: initial;
+    background-attachment: initial;
+    background-origin: initial;
+    background-clip: initial;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 100;
+    }
+    .glZKvc .display-block {
+    display: block;
+    }
+    .glZKvc .modal-main {
+    position: fixed;
+    background-image: initial;
+    background-position-x: initial;
+    background-position-y: initial;
+    background-size: initial;
+    background-repeat-x: initial;
+    background-repeat-y: initial;
+    background-attachment: initial;
+    background-origin: initial;
+    background-clip: initial;
+    background-color: white;
+    width: 80%;
+    height: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    }
+    .glZKvc [class*="infocapture"] {
+    max-width: 40em;
+    padding-top: 2.5em;
+    padding-right: 2.5em;
+    padding-bottom: 2.5em;
+    padding-left: 2.5em;
+    text-align: center;
+    }
+    h1, h2, h3, h4, h5, h6 {
+    font-style: inherit;
+    font-variant-ligatures: inherit;
+    font-variant-caps: inherit;
+    font-variant-numeric: inherit;
+    font-variant-east-asian: inherit;
+    font-weight: inherit;
+    font-stretch: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    font-family: inherit;
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    }
+    .glZKvc [class*="infocapture"] h1 {
+    font-family: 'PlantinMTStd-Light', sans-serif !important;
+    color: black  !important;
+    font-size: 2.5em;
+    margin-bottom: 0.25em;
+    }
+    figure, p {
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    }
+    .glZKvc [class*="infocapture"] p {
+    margin-top: 1em;
+    margin-right: 1.5em;
+    margin-bottom: 1em;
+    margin-left: 1.5em;
+    padding-top: 0px;
+    padding-right: 1em;
+    padding-bottom: 2.5em;
+    padding-left: 1em;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: rgb(0, 0, 0);
+    font-size: 0.9em;
+    }
+    .lhzPls .mailchimpForm {
+    margin-top: 1em;
+    margin-right: 1.5em;
+    margin-bottom: 0px;
+    margin-left: 1.5em;
+    }
+    .lhzPls .mailchimpForm input {
+    display: block;
+    width: 100%;
+    padding-top: 1em;
+    padding-right: 0px;
+    padding-bottom: 1em;
+    padding-left: 0px;
+    font-size: 1.5rem;
+    margin-top: 1.5em;
+    margin-right: 0px;
+    margin-bottom: 1.5em;
+    margin-left: 0px;
+    border-top-width: initial;
+    border-right-width: initial;
+    border-left-width: initial;
+    border-top-style: none;
+    border-right-style: none;
+    border-left-style: none;
+    border-top-color: initial;
+    border-right-color: initial;
+    border-left-color: initial;
+    border-image-source: initial;
+    border-image-slice: initial;
+    border-image-width: initial;
+    border-image-outset: initial;
+    border-image-repeat: initial;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: rgb(0, 0, 0);
+    }
+    button {
+    padding-top: 0px;
+    padding-right: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    background-image: none;
+    background-position-x: initial;
+    background-position-y: initial;
+    background-size: initial;
+    background-repeat-x: initial;
+    background-repeat-y: initial;
+    background-attachment: initial;
+    background-origin: initial;
+    background-clip: initial;
+    background-color: initial;
+    border-top-width: initial;
+    border-right-width: initial;
+    border-bottom-width: initial;
+    border-left-width: initial;
+    border-top-style: none;
+    border-right-style: none;
+    border-bottom-style: none;
+    border-left-style: none;
+    border-top-color: initial;
+    border-right-color: initial;
+    border-bottom-color: initial;
+    border-left-color: initial;
+    border-image-source: initial;
+    border-image-slice: initial;
+    border-image-width: initial;
+    border-image-outset: initial;
+    border-image-repeat: initial;
+    outline-color: initial;
+    outline-style: none;
+    outline-width: initial;
+    }
+    a, button {
+    color: inherit;
+    font-style: inherit;
+    font-variant-ligatures: inherit;
+    font-variant-caps: inherit;
+    font-variant-numeric: inherit;
+    font-variant-east-asian: inherit;
+    font-weight: inherit;
+    font-stretch: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    font-family: inherit;
+    }
+    .lhzPls .mailchimpForm button {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 2px 10px 0px;
+    background-color: rgb(238, 67, 34);
+    color: white;
+    font-weight: bold;
+    padding-top: 0.5em;
+    padding-right: 4em;
+    padding-bottom: 0.5em;
+    padding-left: 4em;
+    margin-top: 2em;
+    }
+    .lhzPls .mailchimpForm .legalText {
+    margin-top: 1.5em;
+    text-align: left;
+    }
+    .glZKvc [class*="infocapture"] span {
+    font-size: 0.7em;
+    }
+    .glZKvc .modal-main .close-svg {
+    width: 1.5em;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    margin-top: 1.5em;
+    margin-right: 2em;
+    }
+    .glZKvc [class*="infocapture"] .close-svg path {
+    fill: rgb(0, 0, 0);
+    }</style><div style="-webkit-font-smoothing: antialiased; font-family: &quot;Work Sans&quot;,sans-serif; font-size: calc(.8rem + .51948vw); box-sizing: border-box; user-select: none;transform: scale(0.7); margin-top: 23.5%;" class="sc-kpOJdX glZKvc"><div style="-webkit-font-smoothing: antialiased; font-family: &quot;Work Sans&quot;,sans-serif; font-size: calc(.8rem + .51948vw); box-sizing: border-box; user-select: none; position: fixed; top: 0px; left: 0px; width: 100%; height: 100%; z-index: 100; background: rgba(0, 0, 0, 0.6); display: block;" class="modal display-block"><div style="-webkit-font-smoothing: antialiased; font-family: &quot;Work Sans&quot;,sans-serif; font-size: calc(.8rem + .51948vw); box-sizing: border-box; user-select: none; position: fixed; width: 80%; height: auto; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; max-width: 40em; text-align: center; padding: 2.5em;" class="modal-main infocapture_requestdatahome"><div style="-webkit-font-smoothing: antialiased; font-family: &quot;Work Sans&quot;,sans-serif; font-size: calc(.8rem + .51948vw); text-align: center; box-sizing: border-box; user-select: none;" class="sc-cSHVUG lhzPls"><h1 style="-webkit-font-smoothing: antialiased; text-align: center; box-sizing: border-box; user-select: none; font: inherit; margin: 0; font-family: Berlingske; font-size: 2.5em; margin-bottom: 0.25em;">Do You Want API Access?</h1><div style="-webkit-font-smoothing: antialiased; font-family: &quot;Work Sans&quot;,sans-serif; font-size: calc(.8rem + .51948vw); text-align: center; box-sizing: border-box; user-select: none; margin: 1em 1.5em 0px;" class="mailchimpForm"><input type="hidden" value="requestdatahome"><input id="API_FORM_NAME" type="text" placeholder="NAME*" style="-webkit-font-smoothing: antialiased; box-sizing: border-box; user-select: none; display: block; width: 100%; font-size: 1.5rem; border-top-width: initial; border-right-width: initial; border-left-width: initial; border-top-color: initial; border-right-color: initial; border-left-color: initial; padding: 1em 0px; margin: 1.5em 0px; border-style: none none solid; border-image: initial; border-bottom: 1px solid rgb(0, 0, 0);"><input id="API_FORM_ORG" type="text" placeholder="ORGANIZATION*" style="-webkit-font-smoothing: antialiased; box-sizing: border-box; user-select: none; display: block; width: 100%; font-size: 1.5rem; border-top-width: initial; border-right-width: initial; border-left-width: initial; border-top-color: initial; border-right-color: initial; border-left-color: initial; padding: 1em 0px; margin: 1.5em 0px; border-style: none none solid; border-image: initial; border-bottom: 1px solid rgb(0, 0, 0);"><input id="API_FORM_EMAIL" type="email" placeholder="EMAIL*" style="-webkit-font-smoothing: antialiased; box-sizing: border-box; user-select: none; display: block; width: 100%; font-size: 1.5rem; border-top-width: initial; border-right-width: initial; border-left-width: initial; border-top-color: initial; border-right-color: initial; border-left-color: initial; padding: 1em 0px; margin: 1.5em 0px; border-style: none none solid; border-image: initial; border-bottom: 1px solid rgb(0, 0, 0);"><p style="-webkit-font-smoothing: antialiased;font-family: &quot;Work Sans&quot;,sans-serif;text-align: center;box-sizing: border-box;user-select: none;font-size: 0.9em;margin: 1em 1.5em;padding: 0;border-bottom: none;"><b style="font-weight: bold;">HAVE A COOL IDEA? TELL US! MAYBE WE CAN HELP!</b><br>Do you have an interesting application for population.io API? Let us know! We may be able to help!</p><button id="API_FORM_SUBMIT" style="-webkit-font-smoothing: antialiased;box-sizing: border-box;user-select: none;background: none;border: none;outline: none;font: inherit;box-shadow: rgba(0, 0, 0, 0.5) 0px 2px 10px 0px;background-color: #8d82ac;color: white;font-weight: bold;margin-top: 1em;border-radius: 5px;padding: 0.5em 4em; cursor:pointer;" onClick="sendApiAccessRequest(this);">Submits</button><div style="-webkit-font-smoothing: antialiased; font-family: &quot;Work Sans&quot;,sans-serif; font-size: calc(.8rem + .51948vw); box-sizing: border-box; user-select: none; margin-top: 1.5em; text-align: left;" class="legalText"><span>World Data Lab (WDL) is an Austrian not-for-profit organization responsible for building and maintaining the World Population Project amongst other similar projects.  If you fill out the form below your information will be used to 1) send you updates about improvements to the clock as they become available 2) send you articles about the Population.io, as well as other similar projects that WDL is working on 3) create an internal database of users interested in learning how to access World Population Project datasets and related products.  At no time will WDL sell or share your data to any non-related entity.  You have the right to remove your data from our database by clicking on the "unsubscribe" link at the bottom of any email you receive in the future or to write to World Data Lab requesting to be unsubscribed from our database at any time at the following email address:: hello@worlddata.io.</span></div></div></div><button id="API_FORM_CLOSE" style="-webkit-font-smoothing: antialiased; box-sizing: border-box; user-select: none; padding: 0; background: none; border: none; outline: none; color: inherit; font: inherit;" ng-click="$close()" class="modal-close-button"><svg id="Capa_1" x="0px" y="0px" viewBox="0 0 47.971 47.971" xml:space="preserve" class="close-svg"><g><path d="M28.228,23.986L47.092,5.122c1.172-1.171,1.172-3.071,0-4.242c-1.172-1.172-3.07-1.172-4.242,0L23.986,19.744L5.121,0.88 c-1.172-1.172-3.07-1.172-4.242,0c-1.172,1.171-1.172,3.071,0,4.242l18.865,18.864L0.879,42.85c-1.172,1.171-1.172,3.071,0,4.242 C1.465,47.677,2.233,47.97,3,47.97s1.535-0.293,2.121-0.879l18.865-18.864L42.85,47.091c0.586,0.586,1.354,0.879,2.121,0.879 s1.535-0.293,2.121-0.879c1.172-1.171,1.172-3.071,0-4.242L28.228,23.986z" style="fill: rgb(0, 0, 0);"></path></g></svg></button></div></div></div></script><script type="text/ng-template" id="browser-warning.html"><style>.modal-dialog {
+    background: #fff;
+    -webkit-box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    border-radius: 4px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 40px;
+    width: 800px;
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    margin-left: -400px;
+    max-height: 80%;
+    overflow-y: auto;
+    }</style><div class="modal-header"><h3 class="modal-title">{{ 'BROWSER_WARNING_TITLE' | translate }}</h3></div><div class="modal-body"><p>{{ 'BROWSER_WARNING_INTRO' | translate }}</p><div class="browser-list"><a href="http://www.google.com/chrome" target="_blank"><div class="icon chome"></div><span class="title">Chrome</span><span class="publisher">Google</span></a><a href="https://www.apple.com/de/safari" target="_blank"><div class="icon safari"></div><span class="title">Safari</span><span class="publisher">Apple</span></a><a href="http://www.mozilla.com/firefox" target="_blank"><div class="icon firefox"></div><span class="title">Firefox</span><span class="publisher">Mozilla Foundation</span></a></div></div><div class="modal-footer"><button ng-click="$close()">OK!</button></div></script><div ng-class="{'expanded': !expanded}" class="share animate"><div class="find-facebook"><a href="https://www.facebook.com/worlddatalab" onClick="ga('send', 'event', 'CornerShare', 'click', 'Facebook_Big')">{{ 'FIND_FACEBOOK' | translate }}</a></div><div class="tedtalk"><a href="{{ 'SHARE_TED_TALK_URL' | translate }}" onClick="ga('send', 'event', 'CornerShare', 'click', 'TED_Talk')">{{ 'SHARE_TED_TALK' | translate }}</a></div><span>{{ 'SHARE_TEXT' | translate }}</span><div class="links"><a href="https://www.facebook.com/worlddatalab" onClick="ga('send', 'event', 'CornerShare', 'click', 'Facebook')" class="fa fa-facebook-square"></a><a href="https://twitter.com/world_data_lab" onClick="ga('send', 'event', 'CornerShare', 'click', 'Twitter')" class="fa fa-twitter-square"></a></div></div><ul ng-show="profile.active" class="navigation"><li ng-class="{'active': currentPage == 0}" ng-click="showSection('home')"><span></span></li><li ng-class="{'active': currentPage == 1}" ng-click="showSection('summary')"><span></span></li><li ng-class="{'active': currentPage == 4}" ng-click="showSection('expectancy')"><span></span></li><li ng-class="{'active': currentPage == 2}" ng-click="showSection('milestones')"><span></span></li><li ng-class="{'active': currentPage == 3}" ng-click="showSection('birthdays')"><span></span></li><li ng-class="{'active': currentPage == 5}" ng-click="showSection('death')"><span></span></li></ul><script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script><script src="app/scripts/dialog_trigger.js" type="text/javascript"></script></div><footer><div class="marketBanner footerBanner"><span class="marketBannerLogo"></span><span class="marketBannerFirst">{{ 'MARKET_BANNER_FIRST' | translate }}</span><span class="marketBannerSec">{{ 'MARKET_BANNER_SEC' | translate }}</span><a target="_blank" href="https://marketpro.io/" share-title="marketpro.io" class="marketBannerLink">{{ 'MARKET_BANNER_LINK' | translate }}</a></div></footer><div class="copyright"><div class="container"><div class="block"><p><a ng-click="showImpressum()">Impressum</a> <a href="/cdn-cgi/l/email-protection#56263926233a37223f3938162139243a3232372237783f39">{{ 'FOOTER_MORE_CONTACT' | translate }}</a> <a href="http://api.population.io" target="_blank">{{ 'FOOTER_MORE_API' | translate }}</a> © Copyright: <a href="http://worlddata.io">World Data Lab</a></p></div></div></div><div class="chart-tooltip"></div>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="/scripts/vendor.js"></script>
+    
+    
+    <script src="/scripts/main.3ba3d30.js"></script>
+    </body></html>
